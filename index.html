@@ -3,36 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video with Unmute Button</title>
+    <title>Debug Unmute Button</title>
     <style>
+        #debug-info {
+            font-size: 14px;
+            color: red;
+        }
         video {
-            pointer-events: none; /* Prevent user interaction */
             width: 640px;
             height: 360px;
-            background-color: black; /* Optional: black background */
+            background-color: black;
         }
-
         #unmute-btn {
             position: absolute;
             top: 20px;
             left: 20px;
             z-index: 10;
-            background-color: #FF6347; /* Bright color for visibility */
+            background-color: orange;
             color: white;
-            border: 2px solid black; /* Debug: Add a border */
-            padding: 10px 15px;
-            font-size: 16px;
+            border: 1px solid black;
+            padding: 10px;
             cursor: pointer;
-            border-radius: 5px;
-        }
-
-        #unmute-btn:hover {
-            background-color: #FF4500;
         }
     </style>
 </head>
 <body>
 
+    <div id="debug-info">Debug Info: Checking Button Visibility</div>
     <video id="my-video" autoplay muted playsinline>
         <source src="Your paragraph text.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -40,23 +37,17 @@
     <button id="unmute-btn" onclick="unmuteVideo()">Unmute</button>
 
     <script>
-        const video = document.querySelector('#my-video');
-        const unmuteBtn = document.querySelector('#unmute-btn');
+        const video = document.getElementById('my-video');
+        const unmuteBtn = document.getElementById('unmute-btn');
+        const debugInfo = document.getElementById('debug-info');
 
-        // Autoplay with fallback to muted if required
-        video.controls = false; // Ensure no controls are visible
-        video.play().catch(() => {
-            console.warn("Autoplay with sound failed; starting muted.");
-            video.muted = true; // Fallback to muted autoplay
-            video.play();
-        });
-
-        // Function to unmute video
         function unmuteVideo() {
             video.muted = false; // Unmute the video
-            video.play(); // Ensure it plays after unmuting
-            unmuteBtn.style.display = 'none'; // Hide the button after unmuting
+            unmuteBtn.style.display = 'none'; // Hide the button
+            debugInfo.textContent = "Debug Info: Video unmuted successfully.";
         }
+
+        debugInfo.textContent = "Debug Info: Video loaded, button initialized.";
     </script>
 
 </body>
