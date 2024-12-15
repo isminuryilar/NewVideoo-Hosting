@@ -2,21 +2,33 @@
 <html>
 <head>
     <title>Video Hosting</title>
+    <style>
+        /* Prevent users from interacting with the video */
+        video {
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-    <video width="640" height="360" autoplay muted playsinline>
-        <source src="Your paragrapgh text.mp4" type="video/mp4">
+    <!-- The video element -->
+    <video width="640" height="360" autoplay playsinline>
+        <source src="Your paragraph text.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     <script>
         const video = document.querySelector('video');
-        video.muted = false; // Attempt to unmute
-        video.play().catch((error) => {
-            console.error("Autoplay failed due to browser restrictions.", error);
+
+        // Force video autoplay without controls
+        video.controls = false; // Ensure controls are removed
+        video.muted = false;    // Unmute the video automatically (if browser allows it)
+        video.play().catch(() => {
+            console.log("Browser prevented autoplay with sound. Autoplaying muted instead.");
+            video.muted = true; // Fallback: Start muted to satisfy browser restrictions
+            video.play();
         });
-        video.controls = false;
     </script>
 </body>
 </html>
+
 
