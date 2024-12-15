@@ -5,12 +5,13 @@
     <style>
         /* Prevent users from interacting with the video */
         video {
-            pointer-events: none; /* Disable all user interaction */
+            pointer-events: none; /* Disable user interaction */
+            background-color: black; /* Optional: adds a black background for better visibility */
         }
     </style>
 </head>
 <body>
-    <!-- The video element -->
+    <!-- The video element without controls -->
     <video width="640" height="360" autoplay playsinline>
         <source src="Your paragraph text.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -19,12 +20,13 @@
     <script>
         const video = document.querySelector('video');
 
-        // Force video autoplay without controls
-        video.controls = false;  // Ensure controls are removed
-        video.muted = false;     // Unmute the video automatically if allowed
+        // Ensure controls are removed and autoplay without controls
+        video.controls = false;  // This explicitly ensures controls are removed
+        video.muted = false;     // Try unmuting for autoplay, if possible
+
         video.play().catch(() => {
             console.log("Browser prevented autoplay with sound. Autoplaying muted instead.");
-            video.muted = true; // Fallback for autoplay restrictions
+            video.muted = true; // Autoplay is often blocked with sound, so muted as fallback
             video.play();
         });
     </script>
