@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debug Unmute Button</title>
+    <title>Start on Unmute</title>
     <style>
-        #debug-info {
-            font-size: 14px;
-            color: red;
-        }
         video {
             width: 640px;
             height: 360px;
@@ -29,25 +25,24 @@
 </head>
 <body>
 
-    <div id="debug-info">Debug Info: Checking Button Visibility</div>
-    <video id="my-video" autoplay muted playsinline>
+    <video id="my-video" playsinline muted>
         <source src="Your paragraph text.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-    <button id="unmute-btn" onclick="unmuteVideo()">Unmute</button>
+    <button id="unmute-btn" onclick="unmuteAndStart()">Unmute & Start</button>
 
     <script>
         const video = document.getElementById('my-video');
         const unmuteBtn = document.getElementById('unmute-btn');
-        const debugInfo = document.getElementById('debug-info');
 
-        function unmuteVideo() {
+        // Pause video when the page loads
+        video.pause();
+
+        function unmuteAndStart() {
             video.muted = false; // Unmute the video
+            video.play(); // Play the video
             unmuteBtn.style.display = 'none'; // Hide the button
-            debugInfo.textContent = "Debug Info: Video unmuted successfully.";
         }
-
-        debugInfo.textContent = "Debug Info: Video loaded, button initialized.";
     </script>
 
 </body>
