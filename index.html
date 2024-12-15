@@ -14,12 +14,12 @@
 
         #unmute-btn {
             position: absolute;
-            top: 20px; /* Adjust button position */
+            top: 20px;
             left: 20px;
-            z-index: 10; /* Ensure it appears over the video */
-            background-color: #FF6347; /* Nice visual style */
+            z-index: 10;
+            background-color: #FF6347; /* Bright color for visibility */
             color: white;
-            border: none;
+            border: 2px solid black; /* Debug: Add a border */
             padding: 10px 15px;
             font-size: 16px;
             cursor: pointer;
@@ -33,23 +33,20 @@
 </head>
 <body>
 
-    <!-- The video element -->
     <video id="my-video" autoplay muted playsinline>
         <source src="Your paragraph text.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-
-    <!-- Unmute Button -->
     <button id="unmute-btn" onclick="unmuteVideo()">Unmute</button>
 
     <script>
         const video = document.querySelector('#my-video');
         const unmuteBtn = document.querySelector('#unmute-btn');
 
-        // Autoplay with fallback to muted if the browser requires it
+        // Autoplay with fallback to muted if required
         video.controls = false; // Ensure no controls are visible
         video.play().catch(() => {
-            console.warn("Browser prevented autoplay with sound; starting muted.");
+            console.warn("Autoplay with sound failed; starting muted.");
             video.muted = true; // Fallback to muted autoplay
             video.play();
         });
