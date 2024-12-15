@@ -5,7 +5,7 @@
     <style>
         /* Prevent users from interacting with the video */
         video {
-            pointer-events: none;
+            pointer-events: none; /* Disable all user interaction */
         }
     </style>
 </head>
@@ -20,15 +20,13 @@
         const video = document.querySelector('video');
 
         // Force video autoplay without controls
-        video.controls = false; // Ensure controls are removed
-        video.muted = false;    // Unmute the video automatically (if browser allows it)
+        video.controls = false;  // Ensure controls are removed
+        video.muted = false;     // Unmute the video automatically if allowed
         video.play().catch(() => {
             console.log("Browser prevented autoplay with sound. Autoplaying muted instead.");
-            video.muted = true; // Fallback: Start muted to satisfy browser restrictions
+            video.muted = true; // Fallback for autoplay restrictions
             video.play();
         });
     </script>
 </body>
 </html>
-
-
