@@ -3,47 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Hosting</title>
+    <title>Video with Unmute Button</title>
     <style>
-        /* Ensure video has no controls and no user interaction */
         video {
-            pointer-events: none; /* Disable all interaction */
-            background-color: black; /* Optional: black background for better display */
+            pointer-events: none; /* Prevent user interaction */
+            width: 640px;
+            height: 360px;
+            background-color: black; /* Optional: black background */
         }
 
-        /* A potential wrapper to make the video unclickable by covering it */
-        #video-wrapper {
-            pointer-events: none;
+        #unmute-btn {
+            position: absolute;
+            top: 20px; /* Adjust button position */
+            left: 20px;
+            z-index: 10; /* Ensure it appears over the video */
+            background-color: #FF6347; /* Nice visual style */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #unmute-btn:hover {
+            background-color: #FF4500;
         }
     </style>
 </head>
 <body>
 
-    <!-- Video container -->
-    <div id="video-wrapper">
-        <!-- The video element without controls -->
-        <video id="my-video" width="640" height="360" autoplay playsinline>
-            <source src="Your paragraph text.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+    <!-- The video element -->
+    <video id="my-video" autoplay muted playsinline>
+        <source src="Your paragraph text.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Unmute Button -->
+    <button id="unmute-btn" onclick="unmuteVideo()">Unmute</button>
 
     <script>
         const video = document.querySelector('#my-video');
+        const unmuteBtn = document.querySelector('#unmute-btn');
 
-        // Ensure controls are removed (in case they appear)
-        video.controls = false;
-        
-        // Force the video to autoplay and make sure it starts without sound if blocked by the browser
-        video.muted = false; // Try unmuting for autoplay without restrictions
+        // Autoplay with fallback to muted if the browser requires it
+        video.controls = false; // Ensure no controls are visible
         video.play().catch(() => {
-            console.log("Browser prevented autoplay with sound, autoplaying muted.");
-            video.muted = true; // Fallback: autoplay muted if sound is blocked
+            console.warn("Browser prevented autoplay with sound; starting muted.");
+            video.muted = true; // Fallback to muted autoplay
             video.play();
         });
 
-        // Disable user interaction explicitly by covering the video with a wrapper that ignores clicks
-        document.getElementById('video-wrapper').style.pointerEvents = 'none';
+        // Function to unmute video
+        function unmuteVideo() {
+            video.muted = false; // Unmute the video
+            video.play(); // Ensure it plays after unmuting
+            unmuteBtn.style.display = 'none'; // Hide the button after unmuting
+        }
     </script>
+
 </body>
 </html>
