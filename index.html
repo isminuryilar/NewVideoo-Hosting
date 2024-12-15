@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Hosting</title>
     <style>
-        /* Prevent users from interacting with the video */
+        /* Ensure video has no controls and no user interaction */
         video {
-            pointer-events: none; /* Disable user interaction */
-            background-color: black; /* Optional: adds a black background for better visibility */
+            pointer-events: none; /* Disable all interaction */
+            background-color: black; /* Optional: black background for better display */
+        }
+
+        /* A potential wrapper to make the video unclickable by covering it */
+        #video-wrapper {
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <!-- The video element without controls -->
-    <video width="640" height="360" autoplay playsinline>
-        <source src="Your paragraph text.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+
+    <!-- Video container -->
+    <div id="video-wrapper">
+        <!-- The video element without controls -->
+        <video id="my-video" width="640" height="360" autoplay playsinline>
+            <source src="Your paragraph text.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
 
     <script>
-        const video = document.querySelector('video');
+        const video = document.querySelector('#my-video');
 
-        // Ensure controls are removed and autoplay without controls
-        video.controls = false;  // This explicitly ensures controls are removed
-        video.muted = false;     // Try unmuting for autoplay, if possible
-
+        // Ensure controls are removed (in case they appear)
+        video.controls = false;
+        
+        // Force the video to autoplay and make sure it starts without sound if blocked by the browser
+        video.muted = false; // Try unmuting for autoplay without restrictions
         video.play().catch(() => {
-            console.log("Browser prevented autoplay with sound. Autoplaying muted instead.");
-            video.muted = true; // Autoplay is often blocked with sound, so muted as fallback
+            console.log("Browser prevented autoplay with sound, autoplaying muted.");
+            video.muted = true; // Fallback: autoplay muted if sound is blocked
             video.play();
         });
+
+        // Disable user interaction explicitly by covering the video with a wrapper that ignores clicks
+        document.getElementById('video-wrapper').style.pointerEvents = 'none';
     </script>
 </body>
 </html>
